@@ -4,7 +4,7 @@
         <td>{{ entry.task.account.name }}</td>
         <td>{{ entry.task.name }}</td>
         <td class="has-text-centered">
-            <button class="button is-small" :class="{'is-loading': loading}" type="button" @click="deleteEntry(entry.id)">&times;</button>
+            <button class="button is-small is-danger" :class="{'is-loading': loading}" type="button" @click="deleteEntry(entry.id)">&times;</button>
         </td>
     </tr>
 </template>

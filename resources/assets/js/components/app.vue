@@ -6,17 +6,18 @@
                     <div class="column">
                         <date v-model="date"></date>
                     </div>
-                    <div class="column is-one-quarter">
+                    <div class="column is-narrow">
                         <label class="label">&nbsp;</label>
-                        <button class="button" type="button" @click="previous">&lt;</button>
-                        <button class="button" type="button" @click="next">&gt;</button>
+                        <button class="button" type="button" @click="previous" title="Previous day">&lt;</button>
+                        <button class="button" type="button" @click="today" title="Today">&bull;</button>
+                        <button class="button" type="button" @click="next" title="Next day">&gt;</button>
                     </div>
                 </div>
             </div>
             <div class="column">
                 <div class="control">
                     <label class="label">&nbsp;</label>
-                    <button class="button" type="button" @click="showAddEntry = true">Add entry</button>
+                    <button class="button is-primary" type="button" @click="showAddEntry = true">Add entry</button>
                 </div>
             </div>
         </div>
@@ -107,6 +108,11 @@ export default {
         previous()
         {
             this.date = moment(this.date).subtract(1, 'day').format('YYYY-MM-DD');
+        },
+
+        today()
+        {
+            this.date = moment().format('YYYY-MM-DD');
         }
     }
 }
