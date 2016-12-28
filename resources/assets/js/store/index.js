@@ -6,11 +6,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        accounts: [],
         entries: []
     },
 
     getters: {
-        entries: state => state.entries
+        entries: state => state.entries,
+        accounts: state => state.accounts
     },
 
     mutations: {
@@ -22,6 +24,16 @@ export default new Vuex.Store({
         ADD_ENTRY(state, entry)
         {
             state.entries.push(entry);
+        },
+
+        ACCOUNTS(state, accounts)
+        {
+            state.accounts = accounts;
+        },
+
+        ADD_ACCOUNT(state, account)
+        {
+            state.accounts.push(account);
         }
     },
 
@@ -36,6 +48,13 @@ export default new Vuex.Store({
         removeEntry({state, commit}, id)
         {
             commit('ENTRIES', state.entries.filter(e => e.id != id));
+        },
+
+        loadAccounts({commit})
+        {
+            axios.get('/accounts')
+                .then(response => commit('ACCOUNTS', response.data.accounts))
+                .catch(error => alert(error.message));
         }
     }
 });

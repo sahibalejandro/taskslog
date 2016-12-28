@@ -55,6 +55,11 @@ export default {
         }
     },
 
+    created()
+    {
+        this.loadAccounts();
+    },
+
     watch: {
         date(date, old) {
             this.loadEntries(date);
@@ -83,7 +88,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['loadEntries', 'addEntry']),
+        ...mapActions(['loadAccounts', 'loadEntries', 'addEntry']),
 
         entryAdded(entry)
         {
