@@ -4,31 +4,36 @@
             <div class="columns">
                 <div class="column">
                     <label class="label">Account</label>
-                    <select class="input" @input="emitValue($event.target.value)" v-model="id">
+                    <select class="input" v-model="id">
                         <option v-for="account in accounts" :value="account.id" v-text="account.name"></option>
                     </select>
                 </div>
                 <div class="column is-narrow">
                     <div class="label">&nbsp;</div>
-                    <button class="button" type="button" @click="showAddAccount">+</button>
+                    <button class="button" type="button" @click="toggleAddAccount">+</button>
                 </div>
             </div>
         </div>
 
-        <div class="control" v-show="addAccountIsVisible">
+        <div v-show="addAccountIsVisible">
             <div class="help">Add new account</div>
             <div class="columns">
                 <div class="column">
                     <input type="text" class="input is-small"
                         ref="newAccountInput"
-                        placeholder="Account's name"
+                        placeholder="Account name"
                         v-model="newAccountName"
                         @keypress.enter.prevent="addAccount"
                     >
                 </div>
                 <div class="column is-narrow">
-                    <button class="button is-small is-primary" :class="{'is-loading': addingAccount}" type="button" :disabled="! hasNewAccountName" @click="addAccount">Add</button>
-                    <button class="button is-small" type="button" @click="hideAddAccount" :disabled="addingAccount">&times;</button>
+                    <button class="button is-small is-primary" type="button"
+                        :class="{'is-loading': addingAccount}"
+                        :disabled="! hasNewAccountName"
+                        @click="addAccount"
+                    >
+                        Add
+                    </button>
                 </div>
             </div>
         </div>
@@ -53,9 +58,7 @@ export default {
 
     created()
     {
-        if (this.accounts.length > 0) {
-            this.id = this.accounts[0].id;
-        }
+        this.id = this.accounts.length ? this.accounts[0].id : null;
     },
 
     watch: {
@@ -79,19 +82,18 @@ export default {
             this.$emit('input', parseInt(value, 10));
         },
 
-        showAddAccount()
+        toggleAddAccount()
         {
-            this.addAccountIsVisible = true;
+            this.addAccountIsVisible = !this.addAccountIsVisible;
 
-            this.$nextTick(() => {
-                this.$refs.newAccountInput.focus();
-            });
-        },
+            if (! this.addAccountIsVisible) {
+                this.newAccountName = '';
+            } else {
+                this.$nextTick(() => {
+                    this.$refs.newAccountInput.focus();
+                });
+            }
 
-        hideAddAccount()
-        {
-            this.newAccountName = '';
-            this.addAccountIsVisible = false;
         },
 
         addAccount()
@@ -109,7 +111,7 @@ export default {
                     this.$store.commit('ADD_ACCOUNT', account);
                     this.id = account.id;
 
-                    this.hideAddAccount();
+                    this.toggleAddAccount();
                 })
                 .catch(error => alert(error.message))
                 .then(() => this.addingAccount = false);
