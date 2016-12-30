@@ -1,12 +1,14 @@
 <template>
-    <tr>
-        <td>{{ entry.hours }}</td>
-        <td>{{ entry.task.account.name }}</td>
-        <td>{{ entry.task.name }}</td>
-        <td class="has-text-centered">
-            <button class="button is-small is-danger" :class="{'is-loading': loading}" type="button" @click="deleteEntry(entry.id)">&times;</button>
-        </td>
-    </tr>
+    <span class="columns entry">
+        <div class="column is-1">{{ entry.hours }}</div>
+        <div class="column is-4">{{ entry.task.account.name }}</div>
+        <div class="column is-5">{{ entry.task.name }}</div>
+        <div class="column is-narrow">
+            <div class="has-text-centered">
+                <button class="button is-small is-danger" :class="{'is-loading': loading}" type="button" @click="deleteEntry(entry.id)">&times;</button>
+            </div>
+        </div>
+    </span>
 </template>
 
 <script>

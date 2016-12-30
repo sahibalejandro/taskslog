@@ -1,0 +1,42 @@
+.entry {
+    height: 45px;
+    border-bottom: 1px solid #dbdbdb;
+    overflow: hidden;
+}
+
+.bounce-enter {
+    height: 0;
+    opacity: 0;
+}
+
+.bounce-enter-active {
+    animation: bounce-in .2s;
+}
+
+.bounce-leave-active {
+    animation: bounce-out .2s;
+}
+
+@keyframes bounce-in {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+
+    100% {
+        height: 45px;
+        opacity: 1;
+    }
+}
+
+@keyframes bounce-out {
+    0% {
+        height: 45px;
+        opacity: 1;
+    }
+
+    100% {
+        height: 0;
+        opacity: 0;
+    }
+}

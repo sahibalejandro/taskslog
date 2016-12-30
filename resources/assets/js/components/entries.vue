@@ -1,22 +1,14 @@
 <template>
-    <table class="table is-narrow">
-        <thead>
-            <tr>
-                <th>Hours</th>
-                <th>Account</th>
-                <th>Task</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody v-if="entries.length > 0">
-            <entry v-for="entry in entries" :entry="entry"></entry>
-        </tbody>
-        <tbody v-else>
-            <tr>
-                <td colspan="4">No entries</td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <div class="columns">
+            <div class="column is-1"><strong>Hours</strong></div>
+            <div class="column is-4"><strong>Account</strong></div>
+            <div class="column is-5">Task</div>
+        </div>
+        <transition-group name="bounce">
+            <entry v-for="entry in entries" :entry="entry" :key="entry.id"></entry>
+        </transition-group>
+    </div>
 </template>
 
 <script>
