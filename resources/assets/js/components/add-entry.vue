@@ -6,34 +6,34 @@
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Add new entry</p>
-                    <button class="delete" type="button" @click="close" v-show="! loading"></button>
+                    <button class="delete" type="button" @click="close" v-show="! form.isLoading"></button>
                 </header>
 
                 <div class="modal-card-body">
                     <div class="columns">
                         <div class="column">
-                            <date v-model="entry.date"></date>
+                            <date v-model="form.date"></date>
                         </div>
                         <div class="column">
-                            <account v-model="entry.account_id"></account>
+                            <account v-model="form.account_id"></account>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <task v-model="entry.task_id" :account-id="entry.account_id"></task>
+                            <task v-model="form.task_id" :account-id="form.account_id"></task>
                         </div>
                         <div class="column">
                             <div class="control">
                                 <label class="label">Hours</label>
-                                <input class="input" type="number" step="0.25" min="0.25" max="8.50" placeholder="0.00" v-model="entry.hours">
+                                <input class="input" type="number" step="0.25" min="0.25" max="8.50" placeholder="0.00" v-model="form.hours">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-card-foot">
-                    <button class="button is-primary" :class="{'is-loading': loading}" type="submit">Add entry</button>
-                    <span class="help is-danger" v-text="error" v-show="error"></span>
+                    <button class="button is-primary" :class="{'is-loading': form.isLoading}" type="submit">Add entry</button>
+                    <span class="help is-danger" v-text="form.errors.first()" v-show="form.errors.any()"></span>
                 </div>
             </div>
         </form>
@@ -45,6 +45,7 @@ import axios from 'axios';
 import Date from './date.vue';
 import Account from './account.vue';
 import Task from './task.vue';
+import Form from '../form';
 
 export default {
     name: 'AddEntry',
@@ -59,44 +60,28 @@ export default {
 
     data() {
         return {
-            loading: false,
-            error: null,
-            entry: {
+            form: new Form({
                 date: null,
                 hours: null,
                 task_id: null,
                 account_id: null
-            }
+            })
         }
     },
 
     created() {
-        this.entry.date = this.defaultDate;
+        this.form.date = this.defaultDate;
     },
 
     methods: {
         submit()
         {
-            this.error = null;
-            this.loading = true;
-
-            axios.post('/entries', this.entry)
+            this.form.post('/entries')
                 .then(response => {
                     this.$emit('entry-added', response.data.entry);
                     this.close();
                 })
-                .catch(error => {
-                    if (error.response.status == 422) {
-                        this.error = this.getFirstErrorMessage(error.response);
-                    }
-                })
-                .then(() => this.loading = false);
-        },
-
-        getFirstErrorMessage(response)
-        {
-            const key = Object.keys(response.data)[0];
-            return response.data[key][0];
+                .catch(error => {});
         },
 
         close()
