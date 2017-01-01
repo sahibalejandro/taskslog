@@ -29,7 +29,7 @@
                 <div class="title">{{ currentDay }}</div>
                 <div class="subtitle">{{ currentMonth }}</div>
                 <div class="subtitle">Total:</div>
-                <div class="title">{{ totalTime }} Hrs.</div>
+                <div class="title">{{ totalTimeAnimated }} Hrs.</div>
             </div>
         </div>
         <add-entry v-if="showAddEntry" :default-date="date" @close="showAddEntry = false" @entry-added="entryAdded"></add-entry>
@@ -39,6 +39,7 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import TWEEN from 'tween.js';
 import Date from './date.vue';
 import Entries from './entries.vue';
 import AddEntry from './add-entry.vue';
@@ -53,6 +54,7 @@ export default {
             date: null,
             entries: [],
             showAddEntry: false,
+            totalTimeAnimated: 0
         }
     },
 
@@ -65,6 +67,25 @@ export default {
         date(date, old) {
             this.loadEntries(date);
         },
+
+        totalTime(newValue, oldValue)
+        {
+            const vm = this;
+
+            function animate(time) {
+                requestAnimationFrame(animate);
+                TWEEN.update(time);
+            }
+
+            new TWEEN.Tween({totalTime: oldValue})
+                .to({totalTime: newValue}, 250)
+                .onUpdate(function (){
+                    vm.totalTimeAnimated = this.totalTime.toFixed(2);
+                })
+                .start();
+
+            animate();
+        }
     },
 
     computed: {
@@ -84,7 +105,7 @@ export default {
 
             this.entries.forEach(e => total += parseFloat(e.hours));
 
-            return total.toFixed(2);
+            return total;
         }
     },
 
