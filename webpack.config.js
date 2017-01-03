@@ -20,9 +20,6 @@ module.exports = {
             // other preprocessors should work out of the box, no loader config like this nessessary.
             'scss': 'vue-style-loader!css-loader!sass-loader',
             'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
-
-            // Allow .vue files to use spread operator adding "stage-2" to babel presets.
-            'js': 'babel-loader?presets[]=es2015&presets[]=stage-2'
           }
           // other vue-loader options go here
         }
