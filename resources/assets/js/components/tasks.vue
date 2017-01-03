@@ -1,7 +1,9 @@
 <template>
-    <div>
+    <div class="section">
+        <h3 class="title is-3">Tasks List</h3>
+
         <div class="columns">
-            <div class="column">
+            <div class="column is-narrow">
                 <div class="columns">
                     <div class="column">
                         <date v-model="date"></date>
@@ -14,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="column">
+            <div class="column is-narrow">
                 <div class="control">
                     <label class="label">&nbsp;</label>
                     <button class="button is-primary" type="button" @click="showAddEntry = true">Add entry</button>
@@ -52,7 +54,6 @@ export default {
     data() {
         return {
             date: null,
-            entries: [],
             showAddEntry: false,
             totalTimeAnimated: 0
         }
@@ -60,7 +61,9 @@ export default {
 
     created()
     {
-        this.loadAccounts();
+        // Reset the entries to trigger "totalTime" watcher correctly when
+        // jumping back from another route.
+        this.$store.commit('ENTRIES', []);
     },
 
     watch: {
@@ -110,7 +113,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['loadAccounts', 'loadEntries', 'addEntry']),
+        ...mapActions(['loadEntries', 'addEntry']),
 
         entryAdded(entry)
         {
