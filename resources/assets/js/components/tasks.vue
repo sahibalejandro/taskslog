@@ -81,7 +81,7 @@ export default {
             }
 
             new TWEEN.Tween({totalTime: oldValue})
-                .to({totalTime: newValue}, 250)
+                .to({totalTime: newValue}, 300)
                 .onUpdate(function (){
                     vm.totalTimeAnimated = this.totalTime.toFixed(2);
                 })
