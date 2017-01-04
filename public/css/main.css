@@ -8,6 +8,10 @@ html, body {
     overflow: hidden;
 }
 
+.columns.is-unique {
+    margin-bottom: 0;
+}
+
 .bounce-enter {
     height: 0;
     opacity: 0;

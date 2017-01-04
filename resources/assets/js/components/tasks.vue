@@ -104,11 +104,7 @@ export default {
 
         totalTime()
         {
-            let total = 0;
-
-            this.entries.forEach(e => total += parseFloat(e.hours));
-
-            return total;
+            return this.entries.reduce((t, e) => t += parseFloat(e.hours), 0);
         }
     },
 

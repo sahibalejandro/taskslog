@@ -38,7 +38,7 @@ export default {
         {
             this.loading = true;
 
-            axios.delete(`/entries/${id}`)
+            axios.delete(`/api/entries/${id}`)
                 .then(response => {
                     this.removeEntry(id);
                 })

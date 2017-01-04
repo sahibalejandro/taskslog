@@ -92,7 +92,7 @@ export default {
         },
 
         loadTasks() {
-            axios.get(`/accounts/${this.accountId}/tasks`)
+            axios.get(`/api/accounts/${this.accountId}/tasks`)
                 .then(response => {
                     this.tasks = response.data.tasks;
 
@@ -111,7 +111,7 @@ export default {
 
             this.addingTask = true;
 
-            axios.post('/tasks', data)
+            axios.post('/api/tasks', data)
                 .then(response => {
                     const task = response.data.task;
                     this.id = task.id;

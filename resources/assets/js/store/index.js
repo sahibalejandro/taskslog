@@ -40,7 +40,7 @@ export default new Vuex.Store({
     actions: {
         loadEntries({commit}, date)
         {
-            axios.get(`/entries/date/${date}`)
+            axios.get(`/api/entries/date/${date}`)
                 .then(response => commit('ENTRIES', response.data.entries))
                 .catch(error => alert(error.message));
         },
@@ -52,7 +52,7 @@ export default new Vuex.Store({
 
         loadAccounts({commit})
         {
-            axios.get('/accounts')
+            axios.get('/api/accounts')
                 .then(response => commit('ACCOUNTS', response.data.accounts))
                 .catch(error => alert(error.message));
         }

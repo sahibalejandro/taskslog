@@ -76,7 +76,7 @@ export default {
     methods: {
         submit()
         {
-            this.form.post('/entries')
+            this.form.post('/api/entries')
                 .then(response => {
                     this.$emit('entry-added', response.data.entry);
                     this.close();

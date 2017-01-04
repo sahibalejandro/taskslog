@@ -104,7 +104,7 @@ export default {
 
             this.addingAccount = true;
 
-            axios.post('/accounts', {name: this.newAccountName})
+            axios.post('/api/accounts', {name: this.newAccountName})
                 .then(response => {
                     const account = response.data.account;
 
