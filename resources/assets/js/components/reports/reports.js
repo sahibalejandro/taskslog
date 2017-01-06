@@ -20,6 +20,11 @@ class entriesGroup
         entry.humanDate = moment(entry.date).format('dd DD, MMM YYYY');
         this.entries.push(entry);
     }
+
+    totalTime()
+    {
+        return this.entries.reduce((t, e) => t += parseFloat(e.hours), 0);
+    }
 }
 
 export default {

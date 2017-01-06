@@ -48,15 +48,17 @@
 
         <div class="box" v-for="group in entriesGroups">
             <h4 class="title is-4">{{ group.account.name }}</h4>
-            <div class="columns">
-                <div class="column"><strong>Task</strong></div>
-                <div class="column"><strong>Hours</strong></div>
-                <div class="column"><strong>Date</strong></div>
-            </div>
-            <div class="columns" v-for="entry in group.entries">
-                <div class="column">{{ entry.task.name }}</div>
-                <div class="column">{{ parseFloat(entry.hours).toFixed(2) }}</div>
-                <div class="column">{{ entry.humanDate }}</div>
+            <h5 class="subtitle">{{ group.totalTime() }} Hrs.</h5>
+                <div class="columns">
+                    <div class="column"><strong>Task</strong></div>
+                    <div class="column"><strong>Hours</strong></div>
+                    <div class="column"><strong>Date</strong></div>
+                </div>
+                <div class="columns" v-for="entry in group.entries">
+                    <div class="column">{{ entry.task.name }}</div>
+                    <div class="column">{{ parseFloat(entry.hours).toFixed(2) }}</div>
+                    <div class="column">{{ entry.humanDate }}</div>
+                </div>
             </div>
         </div>
     </div>
